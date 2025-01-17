@@ -1,5 +1,5 @@
 import { ContainerProvider, ParentSize, ReferenceLineMap, ResizingHandle } from './types';
-export declare const IDENTITY: any;
+export declare const IDENTITY: unique symbol;
 export declare function getElSize(el: Element): {
     width: number;
     height: number;

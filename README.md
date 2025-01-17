@@ -86,8 +86,7 @@ Here is a complete example of using "vue-template"
         v-model:active="active"
         :draggable="true"
         :resizable="true"
-        :parent-scale-x="0.5"
-        :parent-scale-y="0.5"
+        :scale="0.5"
         @activated="print('activated')"
         @deactivated="print('deactivated')"
         @drag-start="print('drag-start')"
@@ -430,12 +429,12 @@ following handle nodes will be rendered
 ...
 ```
 
-###  parent-scale-x  parent-scale-y
+###  scale
 used to tell Vue3DraggableResizable how parent scale to fix mouse positon issue
 eg:
 ```html
 ...
-   <Vue3DraggableResizable :parent-scale-x="0.5" parent-scale-y="0.5" >
+   <Vue3DraggableResizable :scale="0.5" >
 ...
 ```
 ### Events

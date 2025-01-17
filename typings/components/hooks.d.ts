@@ -2,25 +2,22 @@ import { Ref } from 'vue';
 import { ContainerProvider, ResizingHandle } from './types';
 declare type HandleEvent = MouseEvent | TouchEvent;
 export declare function useState<T>(initialState: T): [Ref<T>, (value: T) => T];
-declare type TriggerKey = 'left' | 'right';
 export declare function initState(props: any, emit: any): {
     id: string;
-    width: Ref<number, number>;
-    height: Ref<number, number>;
-    top: Ref<number, number>;
-    left: Ref<number, number>;
-    enable: Ref<boolean, boolean>;
-    dragging: Ref<boolean, boolean>;
-    resizing: Ref<boolean, boolean>;
-    resizingHandle: Ref<ResizingHandle, ResizingHandle>;
-    resizingMaxHeight: Ref<number, number>;
-    resizingMaxWidth: Ref<number, number>;
-    resizingMinWidth: Ref<number, number>;
-    resizingMinHeight: Ref<number, number>;
+    width: Ref<number>;
+    height: Ref<number>;
+    top: Ref<number>;
+    left: Ref<number>;
+    enable: Ref<boolean>;
+    dragging: Ref<boolean>;
+    resizing: Ref<boolean>;
+    resizingHandle: Ref<ResizingHandle>;
+    resizingMaxHeight: Ref<number>;
+    resizingMaxWidth: Ref<number>;
+    resizingMinWidth: Ref<number>;
+    resizingMinHeight: Ref<number>;
     aspectRatio: import("vue").ComputedRef<number>;
-    parentScaleX: Ref<number, number>;
-    parentScaleY: Ref<number, number>;
-    triggerKey: Ref<TriggerKey, TriggerKey>;
+    scale: Ref<number>;
     setEnable: (value: boolean) => boolean;
     setDragging: (value: boolean) => boolean;
     setResizing: (value: boolean) => boolean;
@@ -29,14 +26,14 @@ export declare function initState(props: any, emit: any): {
     setResizingMaxWidth: (value: number) => number;
     setResizingMinWidth: (value: number) => number;
     setResizingMinHeight: (value: number) => number;
-    $setWidth: (val: number) => number;
-    $setHeight: (val: number) => number;
-    $setTop: (val: number) => number;
-    $setLeft: (val: number) => number;
+    setWidth: (val: number) => number;
+    setHeight: (val: number) => number;
+    setTop: (val: number) => number;
+    setLeft: (val: number) => number;
 };
 export declare function initParent(containerRef: Ref<HTMLElement | undefined>): {
-    parentWidth: Ref<number, number>;
-    parentHeight: Ref<number, number>;
+    parentWidth: Ref<number>;
+    parentHeight: Ref<number>;
 };
 export declare function initLimitSizeAndMethods(props: any, parentSize: ReturnType<typeof initParent>, containerProps: ReturnType<typeof initState>): {
     setWidth(val: number): number;
@@ -53,7 +50,7 @@ export declare function initLimitSizeAndMethods(props: any, parentSize: ReturnTy
     maxTop: import("vue").ComputedRef<number>;
 };
 export declare function initDraggableContainer(containerRef: Ref<HTMLElement | undefined>, containerProps: ReturnType<typeof initState>, limitProps: ReturnType<typeof initLimitSizeAndMethods>, draggable: Ref<boolean>, emit: any, containerProvider: ContainerProvider | null, parentSize: ReturnType<typeof initParent>): {
-    containerRef: Ref<HTMLElement, HTMLElement>;
+    containerRef: Ref<HTMLElement>;
 };
 export declare function initResizeHandle(containerProps: ReturnType<typeof initState>, limitProps: ReturnType<typeof initLimitSizeAndMethods>, parentSize: ReturnType<typeof initParent>, props: any, emit: any): {
     handlesFiltered: import("vue").ComputedRef<ResizingHandle[]>;
