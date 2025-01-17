@@ -34,12 +34,10 @@
         :disabledH="false"
         :disabledY="false"
         :lockAspectRatio="false"
-        :parent-scale-x="scale"
-        :parent-scale-y="scale"
-        triggerKey="left"
+        :scale="scale"
         classNameHandle="my-handle"
-        @activated="print('activated')"
-        @deactivated="print('deactivated')"
+        @activated="print('activated', $event)"
+        @deactivated="print('deactivated', $event)"
         @drag-start="print('drag-start', $event)"
         @resize-start="print('resize-start', $event)"
         @dragging="print('dragging', $event)"
@@ -68,7 +66,7 @@ export default defineComponent({
       w: 100,
       active: false,
       draggable: true,
-      resizable: false,
+      resizable: true,
       scale:1
     };
   },

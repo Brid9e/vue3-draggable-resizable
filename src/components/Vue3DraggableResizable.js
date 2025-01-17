@@ -10,12 +10,10 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 exports.__esModule = true;
 exports.ALL_HANDLES = void 0;
@@ -187,8 +185,7 @@ var VueDraggableResizable = vue_1.defineComponent({
         hooks_1.initDraggableContainer(containerRef, containerProps, limitProps, vue_1.toRef(props, 'draggable'), emit, containerProvider, parentSize);
         var resizeHandle = hooks_1.initResizeHandle(containerProps, limitProps, parentSize, props, emit);
         hooks_1.watchProps(props, limitProps);
-        return __assign(__assign(__assign(__assign({ containerRef: containerRef,
-            containerProvider: containerProvider }, containerProps), parentSize), limitProps), resizeHandle);
+        return __assign(__assign(__assign(__assign({ containerRef: containerRef, containerProvider: containerProvider }, containerProps), parentSize), limitProps), resizeHandle);
     },
     computed: {
         style: function () {
@@ -232,7 +229,7 @@ var VueDraggableResizable = vue_1.defineComponent({
             ref: 'containerRef',
             "class": ['vdr-container', this.klass],
             style: this.style
-        }, __spreadArrays([
+        }, __spreadArray([
             this.$slots["default"] && this.$slots["default"]()
         ], this.handlesFiltered.map(function (item) {
             return vue_1.h('div', {

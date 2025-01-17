@@ -1,10 +1,8 @@
 "use strict";
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 exports.__esModule = true;
 var vue_1 = require("vue");
@@ -76,7 +74,7 @@ exports["default"] = vue_1.defineComponent({
             if (!this.referenceLineVisible) {
                 return [];
             }
-            return __spreadArrays(this.matchedCols.map(function (item) {
+            return __spreadArray(__spreadArray([], this.matchedCols.map(function (item) {
                 return vue_1.h('div', {
                     style: {
                         width: '0',
@@ -87,7 +85,7 @@ exports["default"] = vue_1.defineComponent({
                         position: 'absolute'
                     }
                 });
-            }), this.matchedRows.map(function (item) {
+            })), this.matchedRows.map(function (item) {
                 return vue_1.h('div', {
                     style: {
                         width: '100%',
@@ -104,7 +102,7 @@ exports["default"] = vue_1.defineComponent({
     render: function () {
         return vue_1.h('div', {
             style: { width: '100%', height: '100%', position: 'relative' }
-        }, __spreadArrays([
+        }, __spreadArray([
             this.$slots["default"] && this.$slots["default"]()
         ], this.renderReferenceLine()));
     }

@@ -7,6 +7,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 exports.__esModule = true;
+exports.DraggableContainer = void 0;
 var Vue3DraggableResizable_1 = require("./components/Vue3DraggableResizable");
 var DraggableContainer_1 = require("./components/DraggableContainer");
 Vue3DraggableResizable_1["default"].install = function (app) {

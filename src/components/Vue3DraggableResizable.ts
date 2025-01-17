@@ -128,17 +128,9 @@ const VdrProps = {
     type: Boolean,
     default: false
   },
-  parentScaleX:{
-    type:Number,
-    default:1
-  },
-  parentScaleY:{
-    type:Number,
-    default:1
-  },
-  triggerKey:{
-    type:String,
-    default:'left'
+  scale: {
+    type: Number,
+    default: 1
   }
 }
 

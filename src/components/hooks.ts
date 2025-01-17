@@ -25,7 +25,6 @@ export function useState<T>(initialState: T): [Ref<T>, (value: T) => T] {
   return [state, setState]
 }
 
-declare  type TriggerKey = 'left' | 'right';
 export function initState(props: any, emit: any) {
   const [width, setWidth] = useState<number>(props.initW)
   const [height, setHeight] = useState<number>(props.initH)
@@ -39,10 +38,7 @@ export function initState(props: any, emit: any) {
   const [resizingMaxHeight, setResizingMaxHeight] = useState<number>(Infinity)
   const [resizingMinWidth, setResizingMinWidth] = useState<number>(props.minW)
   const [resizingMinHeight, setResizingMinHeight] = useState<number>(props.minH)
-  const [parentScaleX,setParentScaleX] = useState<number>(props.parentScaleX)
-  const [parentScaleY,setParentScaleY] = useState<number>(props.parentScaleY)
-  const [triggerKey,setTriggerKey] = useState<TriggerKey>(props.triggerKey)
-
+  const [scale, setScale] = useState<number>(props.scale)
   const aspectRatio = computed(() => height.value / width.value)
   watch(
     width,
@@ -78,15 +74,12 @@ export function initState(props: any, emit: any) {
       setEnable(newVal)
     }
   )
-  watch(()=>props.parentScaleX,()=>{
-      setParentScaleX(props.parentScaleX)
-  })
-  watch(()=>props.parentScaleY,()=>{
-    setParentScaleY(props.parentScaleY)
-  })
-  watch(()=>props.triggerKey,()=>{
-    setTriggerKey(props.triggerKey);
-  })
+  watch(
+    () => props.scale,
+    () => {
+      setScale(props.scale)
+    }
+  )
   return {
     id: getId(),
     width,
@@ -102,9 +95,7 @@ export function initState(props: any, emit: any) {
     resizingMinWidth,
     resizingMinHeight,
     aspectRatio,
-    parentScaleX,
-    parentScaleY,
-    triggerKey,
+    scale,
     setEnable,
     setDragging,
     setResizing,
@@ -113,11 +104,10 @@ export function initState(props: any, emit: any) {
     setResizingMaxWidth,
     setResizingMinWidth,
     setResizingMinHeight,
-    $setWidth: (val: number) => setWidth(Math.floor(val)),
-    $setHeight: (val: number) => setHeight(Math.floor(val)),
-    $setTop: (val: number) => setTop(Math.floor(val)),
-    $setLeft: (val: number) => setLeft(Math.floor(val)),
-    
+    setWidth: (val: number) => setWidth(Math.floor(val)),
+    setHeight: (val: number) => setHeight(Math.floor(val)),
+    setTop: (val: number) => setTop(Math.floor(val)),
+    setLeft: (val: number) => setLeft(Math.floor(val))
   }
 }
 
@@ -152,7 +142,7 @@ export function initLimitSizeAndMethods(
     resizingMinWidth,
     resizingMinHeight
   } = containerProps
-  const { $setWidth, $setHeight, $setTop, $setLeft } = containerProps
+  const { setWidth, setHeight, setTop, setLeft } = containerProps
   const { parentWidth, parentHeight } = parentSize
   const limitProps = {
     minWidth: computed(() => {
@@ -193,7 +183,7 @@ export function initLimitSizeAndMethods(
       if (props.disabledW) {
         return width.value
       }
-      return $setWidth(
+      return setWidth(
         Math.min(
           limitProps.maxWidth.value,
           Math.max(limitProps.minWidth.value, val)
@@ -204,7 +194,7 @@ export function initLimitSizeAndMethods(
       if (props.disabledH) {
         return height.value
       }
-      return $setHeight(
+      return setHeight(
         Math.min(
           limitProps.maxHeight.value,
           Math.max(limitProps.minHeight.value, val)
@@ -215,7 +205,7 @@ export function initLimitSizeAndMethods(
       if (props.disabledY) {
         return top.value
       }
-      return $setTop(
+      return setTop(
         Math.min(
           limitProps.maxTop.value,
           Math.max(limitProps.minTop.value, val)
@@ -226,7 +216,7 @@ export function initLimitSizeAndMethods(
       if (props.disabledX) {
         return left.value
       }
-      return $setLeft(
+      return setLeft(
         Math.min(
           limitProps.maxLeft.value,
           Math.max(limitProps.minLeft.value, val)
@@ -267,9 +257,7 @@ export function initDraggableContainer(
     setEnable,
     setResizing,
     setResizingHandle,
-    parentScaleX,
-    parentScaleY,
-    triggerKey
+    scale,
   } = containerProps
   const { setTop, setLeft } = limitProps
   let lstX = 0
@@ -306,18 +294,10 @@ export function initDraggableContainer(
   }
   const handleDrag = (e: MouseEvent) => {
     e.preventDefault()
-    const trigger = triggerKey.value=='right'?3:1;
-    console.log("键",triggerKey.value)
-    console.log("对应key",trigger)
-    console.log('按下的键',e)
-    if(trigger!= e.which){
-      return;
-    }
-
     if (!(dragging.value && containerRef.value)) return
     const [pageX, pageY] = getPosition(e)
-    const deltaX = (pageX - lstPageX)/parentScaleX.value
-    const deltaY = (pageY - lstPageY)/parentScaleY.value
+    const deltaX = (pageX - lstPageX) / scale.value
+    const deltaY = (pageY - lstPageY) / scale.value
     let newLeft = lstX + deltaX
     let newTop = lstY + deltaY
     if (referenceLineMap !== null) {
@@ -426,7 +406,7 @@ export function initResizeHandle(
   emit: any
 ) {
   const { setWidth, setHeight, setLeft, setTop } = limitProps
-  const { width, height, left, top, aspectRatio } = containerProps
+  const { width, height, left, top, aspectRatio, scale } = containerProps
   const {
     setResizing,
     setResizingHandle,
@@ -469,16 +449,16 @@ export function initResizeHandle(
       }
     }
     if (idx0 === 't') {
-      setHeight(lstH - deltaY)
+      setHeight(lstH - deltaY / scale.value)
       setTop(lstY - (height.value - lstH))
     } else if (idx0 === 'b') {
-      setHeight(lstH + deltaY)
+      setHeight(lstH + deltaY / scale.value)
     }
     if (idx1 === 'l') {
-      setWidth(lstW - deltaX)
+      setWidth(lstW - deltaX / scale.value)
       setLeft(lstX - (width.value - lstW))
     } else if (idx1 === 'r') {
-      setWidth(lstW + deltaX)
+      setWidth(lstW + deltaX / scale.value)
     }
     emit('resizing', {
       x: left.value,
@@ -512,15 +492,16 @@ export function initResizeHandle(
     setResizing(true)
     idx0 = handleType[0]
     idx1 = handleType[1]
-    if (aspectRatio.value) {
-      if (['tl', 'tm', 'ml', 'bl'].includes(handleType)) {
-        idx0 = 't'
-        idx1 = 'l'
-      } else {
-        idx0 = 'b'
-        idx1 = 'r'
-      }
-    }
+    // if (aspectRatio.value) {
+    //   console.log(aspectRatio.value)
+    //   if (['tl', 'tm', 'ml', 'bl'].includes(handleType)) {
+    //     idx0 = 't'
+    //     idx1 = 'l'
+    //   } else {
+    //     idx0 = 'b'
+    //     idx1 = 'r'
+    //   }
+    // }
     let minHeight = props.minH as number
     let minWidth = props.minW as number
     if (minHeight / minWidth > aspectRatio.value) {
