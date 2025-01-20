@@ -1,6 +1,7 @@
 <p align="center"><img src="https://github.com/a7650/vue3-draggable-resizable/blob/main/docs/logo.png" alt="logo"></p>
 
-<h1 align="center">Vue3DraggableResizable</h1>
+<h1 align="center">Vue3DraggableResizableV2</h1>
+<h2 align="center">支持scale缩放</h2>
 <div align="center">
 
 [![npm version](https://badge.fury.io/js/vue3-draggable-resizable.svg)](https://www.npmjs.com/package/vue3-draggable-resizable)
@@ -10,7 +11,7 @@
 
 </div>
 
-> [Vue3 组件] 用于拖拽调整位置和大小的的组件，同时支持冲突检测，元素吸附对齐，实时参考线。
+> [Vue3 组件] 用于拖拽调整位置和大小的的组件，同时支持冲突检测，元素吸附对齐，实时参考线，缩放。
 > [ Vue3 Component ] Draggable and resizable component for vue3, and, support element adsorption alignment, real-time reference line, etc.
 
 [点击查看中文文档](https://github.com/songyu719/vue3-draggable-resizable/blob/main/docs/document_zh.md)
@@ -36,7 +37,7 @@
 ### Usage
 
 ```bash
-$ npm install vue3-draggable-resizable
+$ npm install vue3-draggable-resizable-v2
 ```
 
 Register the Vue3DraggableResizable
@@ -45,9 +46,9 @@ Register the Vue3DraggableResizable
 // >main.js
 import { createApp } from 'vue'
 import App from './App.vue'
-import Vue3DraggableResizable from 'vue3-draggable-resizable'
+import Vue3DraggableResizable from 'vue3-draggable-resizable-v2'
 //default styles
-import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
+import 'vue3-draggable-resizable-v2/css'
 
 // You will have a global component named "Vue3DraggableResizable"
 createApp(App)
@@ -60,9 +61,9 @@ You can also use it separately within the component
 ```js
 // >component.js
 import { defineComponent } from 'vue'
-import Vue3DraggableResizable from 'vue3-draggable-resizable'
+import Vue3DraggableResizable from 'vue3-draggable-resizable-v2'
 //default styles
-import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
+import 'vue3-draggable-resizable-v2/css'
 
 export default defineComponent({
   components: { Vue3DraggableResizable }
@@ -104,9 +105,9 @@ Here is a complete example of using "vue-template"
 
 <script>
 import { defineComponent } from 'vue'
-import Vue3DraggableResizable from 'vue3-draggable-resizable'
+import Vue3DraggableResizable from 'vue3-draggable-resizable-v2'
 //default styles
-import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
+import 'vue3-draggable-resizable-v2/css'
 export default defineComponent({
   components: { Vue3DraggableResizable },
   data() {
