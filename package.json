@@ -1,6 +1,6 @@
 {
   "name": "vue3-draggable-resizable-v2",
-  "version": "0.0.1",
+  "version": "0.0.2-alpla.1",
   "private": false,
   "description": "[Vue3 Component] 拖拽缩放并具有自动吸附对齐、参考线、缩放等功能",
   "files": [
